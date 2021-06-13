@@ -1,0 +1,25 @@
+:root {
+    --gridSize: 3;
+}
+
+h1 {
+    color: blue;
+}
+
+.gameMap {
+    display: grid;
+    grid-template-columns: repeat(var(--gridSize), auto);
+    height: 550px;
+    width: 550px;
+}
+
+.gameTile {
+    border: solid white 2px;
+    background-color: gray;
+}
+
+.gameTile:hover {
+    background-color: rgb(218, 218, 218);
+    font-weight: bold;
+    font-size: 20px;
+}
