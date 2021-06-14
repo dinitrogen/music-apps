@@ -5,6 +5,8 @@ let notesList = [];
 let correctAnswer = getRandomNote();
 let gridSize = 3;
 let gridArea = gridSize ** 2;
+let activeTileIndex = 0;
+let activeTile;
 
 
 const newQuestionButton = document.querySelector('#newQuestion');
@@ -15,6 +17,51 @@ newQuestionButton.addEventListener('click', function() {
     staffDiv.textContent = `Find this note: "${correctAnswer}"`
     console.log(correctAnswer);
 });
+
+document.addEventListener('keydown', movePlayer)
+
+
+function movePlayer(event) {
+    if (event.code === "ArrowLeft") {
+        console.log("left");
+        if (activeTileIndex === 0 || activeTileIndex % gridSize === 0) {
+            return;
+        } else {
+            activeTile.classList.remove('activeTile');
+            activeTileIndex--;
+        }
+    } else if (event.code === "ArrowRight") {
+        console.log("right");
+        if (activeTileIndex === gridArea - 1 || (activeTileIndex + 1) % gridSize === 0) {
+            return;
+        } else {
+            activeTile.classList.remove('activeTile');
+            activeTileIndex++;
+        }
+    } else if (event.code === "ArrowUp") {
+        console.log("up");
+        if (activeTileIndex < gridSize) {
+            return;
+        } else {
+            activeTile.classList.remove('activeTile');
+            activeTileIndex = activeTileIndex - gridSize;
+        }
+    } else if (event.code === "ArrowDown") {
+        console.log("down");
+        if (activeTileIndex >= gridArea - gridSize) {
+            return;
+        } else {
+            activeTile.classList.remove('activeTile');
+            activeTileIndex = activeTileIndex + gridSize;
+        }
+    } else if (event.code === "Space") {
+        return; // TODO 
+    } else {
+        return;
+    }
+    activeTile = document.querySelector(`#tile${activeTileIndex}`);
+    activeTile.classList.add('activeTile');
+}
 
 
 function drawGrid() {
@@ -37,6 +84,8 @@ function drawGrid() {
             // TODO: remove the event listener to disable further clicks 
         });
     }
+    activeTile = document.querySelector('#tile0');
+    activeTile.classList.add('activeTile');
 }
 
 
@@ -75,8 +124,11 @@ function shuffleNotesArray(array) {
 }
 
 
+
+
 staffDiv.textContent = `Find this note: "${correctAnswer}"`
 drawGrid();
 generateNotesList(gridArea);
 populateMap(gridArea);
+
 
